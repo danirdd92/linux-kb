@@ -28,7 +28,26 @@ This process involves two main components: the Basic Input/Output System (BIOS) 
 
 ## accessing UEFI from linux
 
-* `efibootmgr`       - makes managing UEFI boot targets possible  
-* `efibootmgr -v`    - get more details
+* `efibootmgr`          - makes managing UEFI boot targets possible  
+* `efibootmgr -v`       - get more details
 * `efibootmgr -n <num>` - force the system to boot into another entry the next time it starts
 * active boot entries are marked with an astarisk (*)
+
+
+## GRUB2 configurations
+
+* GRUB2 works with a file which is in `/etc/default/grub`
+* additional configuration settings are stored in files in `/etc/grub.d`
+* most likely you'd edit `GRUB_CMDLINE_LINUX` entry and remove `graphical boot` & `queit` entries for more information on the screen during bootup
+* from that file location use `grub2-mkconfig -o outfilename` to generate the configuration file that is used while booting
+* on BIOS systems it is `/boot/grub2/grub.cfg` 
+* on UEFI systems it is `/boot/efi/EFI/<distro>/grub.cfg`
+
+## initramfs / initrd
+
+* main purpose it to provide kernel modules which are required to mount the root file system
+* consists of a set of directories that are required to do so, and it is bundled into a CPIO archive that is extracted at boot time
+* if all modules required to mount the root FS are compiled in the kernel, booting can happen without initramfs
+* initramfs can also offer additional functionality allowing a system to boot from none-default storage like LVM/rootFS etc..
+* `dracut` or `mkinitrd` in ubuntu is used to build an initramfs.
+* it can be configured with settings in `/etc/dracut.conf` or cli arguments
