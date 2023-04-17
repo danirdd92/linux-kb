@@ -174,10 +174,19 @@
 `df` - shows the amount of space available on a mounted device  
 `du` - shows disk usage per directory
 
-### files ystems
+### file systems
 `tune2fs`   - show and optimiz Ext file systems
 `dumpe2fs`  - dump Ext file system metadata
 `xfs_admin` - monitor XFS properties
 
+## troubleshooting 
 
+`fsck`      - monitor file system integrity  
+`partprobe` - update kernel partition table with current storage information  
+`du`        - show overview of available disk space per directory  
+`df`        - show available disk space per device  
+`iostat`    - storage related statistics  
+`ioping`    - used to test IO performance
+
+* to optimize IO performance, the IO scheduler can be tuned through `/sys`
 

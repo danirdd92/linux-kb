@@ -163,3 +163,14 @@ After -  will start this unit after the units mentioned with "After="
 `tcpdump` & `nmap` for network diagnostics  
 
 
+## troubleshooting 
+
+
+`ip`                     - check machine's network configurations  
+`traceroute`/`tracepath` - analyze path between source and destination  
+`ping`                   - ICMP request to destination, used to test connectivity  
+`mrt`                    - combine both `traceroute` and `ping`  
+`arp`                    - show ip and MAC address resolution tables  
+`dig`                    - current DNS lookup tool  
+`nslookup`               - legacy DNS lookup tool  
+`whois`                  - query DNS domain and request advanced information  

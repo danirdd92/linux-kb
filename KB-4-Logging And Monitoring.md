@@ -141,3 +141,10 @@ PID USER      PR  NI    VIRT    RES    SHR  S
     - `echo "vm.swappiness = 60" > /etc/sysctl.d/swappiness.conf`
 * actovate changes by rebooting or re-reding the config file
     - `sysctl -p /etc/sysctl.d/swappiness.conf`
+
+## troubleshooting 
+
+`/proc/cpuinfo` - detailed information about CPUs  
+`uptime`        - show current uptime and load stats  
+`sar`           - used to gather long time usage statistics  
+`sysctl`        - interfaces parameters in `/proc` to  tune different CPU related settings  
