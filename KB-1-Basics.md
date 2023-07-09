@@ -56,45 +56,54 @@ can use multiple execs
 
 ## root
 
-- root user exist in kernel space
-- root privillage is usually allevated temporary with sudo
-`su`     - switch user opens a shell as specific user, use `su -` to for login shell
-`visudo` - edits sudoers file with default text editor, makes sure file is valid, needs root premissions of course
+- root user exist in kernel space (memory space allocated in RAM when system boots)
+- root privillage is usually allevated temporary with sudo (15min by default, but can be configured otherwise)
+`su`     - switch user opens a shell as specific user, use `su -` to login with root and jump to its home directory
+`visudo` - edits sudoers file with default text editor, makes sure file is valid, needs root premissions of course, and changes done are immediately implemented.
 
 ## bash 
 
-### shortcuts
+### keyboard shortcuts
 ctr-l - clear screen
 ctr-u - clear current command line
 ctr-a - move to start of line
 ctr-e - move to end of line
 ctr-c - SIGINT current process
 ctr-d - SIGKILL current process 
+ctrl+shift+c - copy highlited text
+ctrl+shift+v - paste text from clipboard (temp memory in RAM for saving highlited data)
 
 ### redirection and pipe
 ```
 <   - stdin
 >   - stdout
+1>&2 - redirects stdout to stderr (POSIX)
 2>  - stderr
 &>  - stdout + strerr
+1>&2 - redirects stderr to stdout (POSIX)
 >>  - stdout append
 |   - pipe output 
 ```
 
 ### history
-`history`  -c clear -w write-to -d delete specific line Ctr-r reverse-i-search  
+- `history`  
+  - -c clear
+  -  -w write-to
+  -  -d delete specific line
+  -  Ctr-r reverse-i-search  
 
 ### variables & configurations
 * `env` - all env variables
-create variables with VARNAME=value
-variables exist by default in the current terminal session
-in order to use them in sub-shells use `export` - `export VARNAME=value`
+- to create variables with VARNAME=value
+- variables exist by default in the current terminal session
+- in order to use them in sub-shells use `export`
+    - `export VARNAME=value`
 
 * alias - use alias name for a commend to make it easy `pn=pnpm`
 usually stored in ~/.bashrc dotfile for presistence
 
 * startup files 
-/etc/enviorments contains list of variables initiated when starting bash
+/etc/enviorments contains list of variables initiated when starting bash (can be different in different linux distributions)
 
 /etc/profile is executed while users login
 (!) /etc/profile.d is used as a snapin dir that contains additional configs
@@ -107,7 +116,7 @@ usually stored in ~/.bashrc dotfile for presistence
 ## users, groups and file ownership
 
 * when a user creates a file on linuxm that user becomes the file owner
-* every user must belong to at least one group
+* every user must belong to at least one group (by default to group under the same name as username)
 * most distros are using private groups which means that when a user is created, a new group is created with the same name and the user belongs to it
 * on file creation a user owner and a group owner is assigned to the file:
 ```
@@ -120,9 +129,10 @@ PREMISSIONS | LNK |   OWNR       |  GRP  | SIZE |      DT     | NAME
 `useradd` - create new user (in ubuntu add `-m` tp add home dir for the new user)  
 `usermod` - modify user `-aG <group> <user>` to add user go group (as secondary group) `-g <group> <name>` (as primary group)  
 `userdel` - deletes user  
-* default settings are listed in /etc/login.defs 
-* user information is listed in /etc/passwd and /etc/shadow
-
+* default settings are listed in `/etc/login.defs` 
+* user information is listed in `/etc/passwd` and `/etc/shadow`
+* user skelton folder which is a template to how users should be created can be found at `/etc/skel`
+  
 `groupadd` - create a new group  
 `groupmod` - modify group  
 `groupdel` - deletes a group  
@@ -155,19 +165,20 @@ PREMISSIONS | LNK |   OWNR       |  GRP  | SIZE |      DT     | NAME
 * set group id (suig) (2) - on files - run the file as the group-owner of that file, on dirs - sets ownership on newly created items as the group owner of that dir
 * sticky bit (1) - on dirs - allows a user to delete files if the user is a file owner or the user is a dir owner
 
-`umask` - provides a value to subtract from the current premissions  
+`umask` - provides a value to subtract from the current premissions  and sets those permissins recoursively to the folder strcuture
 
 ## storage managment essentials
 
 * iSCSI is a block protocol for storage networking used to provision storage from a SAN (storage area network) to the server
 
 ```
+/dev/hd[a,b,c..] IDE hard disks (old but still can be found in various places)
 /dev/sd[a,b,c..] SCSI hard disks
-/dev/vd[a,b,c..] KVM hard disks
+/dev/vd[a,b,c..] Virtual hard disks
 /dev/nvme0n - nvme hard disks
 /dev/sr - optical drive
 ```
-
+`blkid` - list block devices with unique id
 `lsblk` - list block devices  
 `fdisk` - format disk, used to create MBR disk partitions  
 `gdisk` - format disk util, used to create GPT partitions  
@@ -185,12 +196,18 @@ PREMISSIONS | LNK |   OWNR       |  GRP  | SIZE |      DT     | NAME
 `df -h`   - presents mounted devices, including available disk space
 `findmnt` - shows all mounts nicely 
 * mount to /mnt for removeable mounts
+* `/media` is used to dynamically mount **usb** devices on most Debian based linux distributions
+* `/run/media` is used to dynamically mount **usb** devices on most RedHat based linux distributions
 * create a mounting point before mounting, a location must exist to be mounted
 
 ## networking
 
-`ifconfig` - is deprecated on SysV unix, only use with BSD systems (MacOS)  
-`ip` - the right way to manage networks  
+`ifconfig` - is deprecated on most linux distributions (might be found on MacOS but not recommended to use due to security issue - enables peremission escallation)  
+`ip` - current way to manage temporary network configuration
+    - other ways are:
+      - `NetworkManager`
+      - `netplan`
+
 
 ### BiosDevName
 ```
