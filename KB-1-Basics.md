@@ -96,7 +96,8 @@ ctrl+shift+v - paste text from clipboard (temp memory in RAM for saving highlite
 * `env` - all env variables
 - to create variables with VARNAME=value
 - variables exist by default in the current terminal session
-- in order to use them in sub-shells use `export` - `export VARNAME=value`
+- in order to use them in sub-shells use `export`
+    - `export VARNAME=value`
 
 * alias - use alias name for a commend to make it easy `pn=pnpm`
 usually stored in ~/.bashrc dotfile for presistence
@@ -202,8 +203,11 @@ PREMISSIONS | LNK |   OWNR       |  GRP  | SIZE |      DT     | NAME
 ## networking
 
 `ifconfig` - is deprecated on most linux distributions (might be found on MacOS but not recommended to use due to security issue - enables peremission escallation)  
-`ip` - current way to manage networks  
-``
+`ip` - current way to manage temporary network configuration
+    - other ways are:
+      - `NetworkManager`
+      - `netplan`
+
 
 ### BiosDevName
 ```
