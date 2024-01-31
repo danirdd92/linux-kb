@@ -75,14 +75,16 @@ ctrl+shift+v - paste text from clipboard (temp memory in RAM for saving highlite
 
 ### redirection and pipe
 ```
-<   - stdin
->   - stdout
-1>&2 - redirects stdout to stderr (POSIX)
-2>  - stderr
-&>  - stdout + strerr
-1>&2 - redirects stderr to stdout (POSIX)
->>  - stdout append
-|   - pipe output 
+<     - Standard input (stdin)
+>     - Standard output (stdout)
+2>    - Standard error (stderr)
+>>    - Append stdout to a file
+2>>   - Append stderr to a file
+&>    - Redirect both stdout and stderr to a file
+1>&2  - Redirect stdout to stderr (POSIX compliant)
+2>&1  - Redirect stderr to stdout (POSIX compliant)
+|     - Pipe output to another command
+|&    - Pipe both stdout and stderr to another command (bash)
 ```
 
 ### history
